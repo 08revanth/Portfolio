@@ -46,7 +46,7 @@
             transition: background-color 0.2s;
         }
         .search-suggestion:hover {
-            background-color: #374151; /* bg-gray-700 */
+            background-color: #374151;
         }
         .lucky-btn {
              background: linear-gradient(90deg, #4285F4, #DB4437, #F4B400, #0F9D58);
@@ -81,7 +81,7 @@
             visibility: visible;
         }
         .gemini-modal {
-            background-color: #1f2937; /* bg-gray-800 */
+            background-color: #1f2937;
             padding: 2rem;
             border-radius: 1rem;
             width: 90%;
@@ -99,8 +99,8 @@
             transition: all 0.2s;
         }
         .gemini-tab.active {
-            border-bottom-color: #4a5568; /* bg-gray-600 */
-            color: #e2e8f0; /* bg-gray-200 */
+            border-bottom-color: #4B5563;
+            color: #e2e8f0;
             font-weight: 600;
         }
         .gemini-content {
@@ -110,8 +110,8 @@
             display: block;
         }
         .loader {
-            border: 4px solid #374151; /* bg-gray-700 */
-            border-top: 4px solid #9ca3af; /* bg-gray-400 */
+            border: 4px solid #4B5563;
+            border-top: 4px solid #9ca3af;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -132,16 +132,16 @@
 
         <!-- Profile and Search Bar Container -->
         <div id="search-container" class="w-full max-w-2xl text-center search-bar-container">
-            <img id="profile-pic" src="./Ss.png" alt="Revanth Malagi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-800 shadow-lg transition-all duration-500">
+            <img id="profile-pic" src="./Ss.png" alt="Revanth Malagi" class="w-48 h-48 rounded-full mx-auto mb-4 border-4 border-gray-700 shadow-lg transition-all duration-500">
             <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-white transition-all duration-500">Revanth Malagi</h1>
             <p id="main-subtitle" class="text-lg text-gray-400 mt-2 mb-8 transition-all duration-500">Google Student Ambassador Applicant</p>
 
             <div class="relative w-full">
-                <div class="flex items-center bg-gray-900 rounded-full shadow-md p-2">
+                <div class="flex items-center bg-gray-800 rounded-full shadow-md p-2">
                     <i class="fas fa-search text-gray-600 mx-3"></i>
-                    <input type="text" id="search-input" placeholder="Ask about Experience, Why Google, Skills, Project or ✨ ask Gemini anything about me..." class="w-full bg-transparent focus:outline-none text-lg text-gray-200 placeholder-gray-500">
+                    <input type="text" id="search-input" placeholder="Search or ✨ ask Gemini anything..." class="w-full bg-transparent focus:outline-none text-lg text-gray-200 placeholder-gray-500">
                 </div>
-                 <div id="suggestions-box" class="absolute left-0 right-0 mt-2 bg-gray-900 rounded-lg shadow-lg overflow-hidden z-10 hidden">
+                 <div id="suggestions-box" class="absolute left-0 right-0 mt-2 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-10 hidden">
                     <!-- Suggestions will be populated by JS -->
                 </div>
             </div>
@@ -169,21 +169,21 @@
                 <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-800">
                     <h2 class="text-3xl font-bold mb-6 text-center text-white">Technical Skills</h2>
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-python mr-2 text-blue-400"></i>Python</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-js-square mr-2 text-yellow-400"></i>JavaScript</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-html5 mr-2 text-red-400"></i>HTML</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-css3-alt mr-2 text-indigo-400"></i>CSS</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-database mr-2 text-green-400"></i>SQL</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-cuttlefish mr-2 text-teal-400"></i>C++</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-react mr-2 text-sky-400"></i>ReactJS</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fab fa-node-js mr-2 text-lime-400"></i>NodeJS</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-link mr-2 text-orange-400"></i>LangChain</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-brain mr-2 text-purple-400"></i>RAG</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-terminal mr-2 text-gray-400"></i>Kali Linux</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-shield-halved mr-2 text-red-400"></i>Penetration Testing</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-rocket mr-2 text-blue-400"></i>Postman & REST APIs</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-wave-square mr-2 text-yellow-400"></i>MATLAB</div>
-                        <div class="bg-gray-800 p-4 rounded-lg"><i class="fas fa-sitemap mr-2 text-green-400"></i>n8n</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-python mr-2 text-blue-400"></i>Python</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-js-square mr-2 text-yellow-400"></i>JavaScript</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-html5 mr-2 text-red-400"></i>HTML</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-css3-alt mr-2 text-indigo-400"></i>CSS</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-database mr-2 text-green-400"></i>SQL</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-cuttlefish mr-2 text-teal-400"></i>C++</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-react mr-2 text-sky-400"></i>ReactJS</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fab fa-node-js mr-2 text-lime-400"></i>NodeJS</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-link mr-2 text-orange-400"></i>LangChain</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-brain mr-2 text-purple-400"></i>RAG</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-terminal mr-2 text-gray-400"></i>Kali Linux</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-shield-halved mr-2 text-red-400"></i>Penetration Testing</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-rocket mr-2 text-blue-400"></i>Postman & REST APIs</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-wave-square mr-2 text-yellow-400"></i>MATLAB</div>
+                        <div class="bg-gray-700 p-4 rounded-lg"><i class="fas fa-sitemap mr-2 text-green-400"></i>n8n</div>
                     </div>
                 </div>
             </section>
@@ -193,20 +193,20 @@
                 <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-800">
                     <h2 class="text-3xl font-bold mb-6 text-center text-white">My Projects</h2>
                     <div class="space-y-6">
-                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-gray-600">
-                            <h3 class="project-title text-xl font-bold text-gray-200">Trivy CI/CD Vulnerability Scanning Pipeline on AWS</h3>
-                            <p class="project-desc text-gray-400 mt-2">Built a secure CI/CD pipeline using Trivy, AWS CodePipeline, and CodeBuild to automate Docker image vulnerability scanning. Parsed scan results and pushed findings to AWS Security Hub via Python and CloudWatch integration. Ensured automated container security checks before deployment with ECR and GitHub integration.</p>
-                            <button class="gemini-btn mt-4 text-sm font-semibold text-gray-400 hover:text-gray-200 transition-colors">✨ Ask Gemini About This Project</button>
+                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-blue-500">
+                            <h3 class="project-title text-xl font-bold text-blue-400">Trivy CI/CD Vulnerability Scanning Pipeline on AWS</h3>
+                            <p class="project-desc text-gray-300 mt-2">Built a secure CI/CD pipeline using Trivy, AWS CodePipeline, and CodeBuild to automate Docker image vulnerability scanning. Parsed scan results and pushed findings to AWS Security Hub via Python and CloudWatch integration. Ensured automated container security checks before deployment with ECR and GitHub integration.</p>
+                            <button class="gemini-btn mt-4 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
-                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-gray-600">
-                            <h3 class="project-title text-xl font-bold text-gray-200">Stock Portfolio Management System</h3>
-                            <p class="project-desc text-gray-400 mt-2">Built a web-based system for users to track and manage their stock holdings. Integrated FinnHub API to fetch and display historical stock price data. Implemented SQL queries for risk analysis, including average stock returns and volatility. Designed an intuitive dashboard to visualize stock performance trends.</p>
-                             <button class="gemini-btn mt-4 text-sm font-semibold text-gray-400 hover:text-gray-200 transition-colors">✨ Ask Gemini About This Project</button>
+                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-green-500">
+                            <h3 class="project-title text-xl font-bold text-green-400">Stock Portfolio Management System</h3>
+                            <p class="project-desc text-gray-300 mt-2">Built a web-based system for users to track and manage their stock holdings. Integrated FinnHub API to fetch and display historical stock price data. Implemented SQL queries for risk analysis, including average stock returns and volatility. Designed an intuitive dashboard to visualize stock performance trends.</p>
+                             <button class="gemini-btn mt-4 text-sm font-semibold text-green-400 hover:text-green-300 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
-                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-gray-600">
-                            <h3 class="project-title text-xl font-bold text-gray-200">Conversational AI & RAG Workflow Suite</h3>
-                            <p class="project-desc text-gray-400 mt-2">Developed intelligent automation pipelines using n8n, LangChain, and OpenAI GPT-4o. Integrated Telegram bot for personalized chat, voice, and image interaction. Built RAG chatbot with Pinecone for domain-specific semantic search. Automated Google Drive → Pinecone document indexing and Google Sheets lead capture.</p>
-                             <button class="gemini-btn mt-4 text-sm font-semibold text-gray-400 hover:text-gray-200 transition-colors">✨ Ask Gemini About This Project</button>
+                        <div class="project-card bg-gray-800 p-6 border border-gray-700 rounded-lg hover:shadow-md transition-shadow hover:border-purple-500">
+                            <h3 class="project-title text-xl font-bold text-purple-400">Conversational AI & RAG Workflow Suite</h3>
+                            <p class="project-desc text-gray-300 mt-2">Developed intelligent automation pipelines using n8n, LangChain, and OpenAI GPT-4o. Integrated Telegram bot for personalized chat, voice, and image interaction. Built RAG chatbot with Pinecone for domain-specific semantic search. Automated Google Drive → Pinecone document indexing and Google Sheets lead capture.</p>
+                             <button class="gemini-btn mt-4 text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
                     </div>
                 </div>
@@ -262,6 +262,39 @@
                      <div class="mt-6 flex justify-center space-x-6">
                         <a href="https://www.linkedin.com/in/revanth-malagi/" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors"><i class="fab fa-linkedin text-3xl"></i></a>
                         <a href="https://github.com/08revanth" target="_blank" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-github text-3xl"></i></a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-800">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-white">Get In Touch</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-300">
+                        <a href="mailto:revanthmalagi@gmail.com" class="bg-gray-800 p-4 rounded-lg flex items-center hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-envelope w-6 text-center mr-4 text-red-400"></i>
+                            <span>revanthmalagi@gmail.com</span>
+                        </a>
+                        <div class="bg-gray-800 p-4 rounded-lg flex items-center">
+                            <i class="fas fa-phone w-6 text-center mr-4 text-green-400"></i>
+                            <span>+91 7760092363</span>
+                        </div>
+                        <a href="https://linkedin.com/in/revanth-malagi" target="_blank" class="bg-gray-800 p-4 rounded-lg flex items-center hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-linkedin w-6 text-center mr-4 text-blue-400"></i>
+                            <span>linkedin.com/in/revanth-malagi</span>
+                        </a>
+                        <a href="https://github.com/08revanth" target="_blank" class="bg-gray-800 p-4 rounded-lg flex items-center hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-github w-6 text-center mr-4 text-gray-400"></i>
+                            <span>github.com/08revanth</span>
+                        </a>
+                         <a href="https://www.instagram.com/revanth_malagi_" target="_blank" class="bg-gray-800 p-4 rounded-lg flex items-center hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-instagram w-6 text-center mr-4 text-pink-400"></i>
+                            <span>revanth_malagi_</span>
+                        </a>
+                        <a href="https://x.com/RevanthMalagi" target="_blank" class="bg-gray-800 p-4 rounded-lg flex items-center hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-twitter w-6 text-center mr-4 text-sky-400"></i>
+                            <span>@RevanthMalagi</span>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -416,10 +449,11 @@
             const pitchBtn = document.getElementById('pitch-btn');
 
             // --- Data ---
-            const searchTerms = ['home', 'skills', 'projects', 'experience', 'why google'];
+            const searchTerms = ['home', 'skills', 'projects', 'experience', 'why google', 'contact'];
             const termMap = {
                 'skill': 'skills', 'project': 'projects', 'work': 'experience',
-                'lead': 'experience', 'why': 'why-google', 'google': 'why-google'
+                'lead': 'experience', 'why': 'why-google', 'google': 'why-google',
+                'contact': 'contact', 'email': 'contact', 'phone': 'contact'
             };
 
             function showSection(id) {
