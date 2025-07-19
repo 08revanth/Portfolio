@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revanth Malagi - Google Student Ambassador Applicant</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇬</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,6 +13,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
+            overflow-x: hidden;
         }
         .search-bar-container {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -20,6 +23,8 @@
             transform: translateY(20px);
             opacity: 0;
             display: none; /* Hidden by default */
+            position: relative;
+            z-index: 1;
         }
         .content-section.active {
             transform: translateY(0);
@@ -44,6 +49,100 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
+        /* Word Cloud Styles */
+        .word-cloud-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .word-cloud-tag {
+            position: absolute;
+            color: #e5e7eb; /* light gray */
+            font-weight: 500;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: float 20s linear infinite, fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-20px) translateY(20px); }
+            50% { transform: translateX(0) translateY(-20px); }
+            75% { transform: translateX(20px) translateY(0); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        /* Gemini Modal Styles */
+        .gemini-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .gemini-modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .gemini-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .gemini-modal-overlay.visible .gemini-modal {
+            transform: scale(1);
+        }
+        .gemini-tab {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .gemini-tab.active {
+            border-bottom-color: #4285F4;
+            color: #4285F4;
+            font-weight: 600;
+        }
+        .gemini-content {
+            display: none;
+        }
+        .gemini-content.active {
+            display: block;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4285F4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -52,14 +151,14 @@
 
         <!-- Profile and Search Bar Container -->
         <div id="search-container" class="w-full max-w-2xl text-center search-bar-container">
-            <img id="profile-pic" src="Ss.png" alt="Revanth Malagi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg transition-all duration-500">
+            <img id="profile-pic" src="./Ss.png" alt="Revanth Malagi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg transition-all duration-500">
             <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-gray-800 transition-all duration-500">Revanth Malagi</h1>
             <p id="main-subtitle" class="text-lg text-gray-600 mt-2 mb-8 transition-all duration-500">Google Student Ambassador Applicant</p>
 
             <div class="relative w-full">
                 <div class="flex items-center bg-white rounded-full shadow-md p-2">
                     <i class="fas fa-search text-gray-400 mx-3"></i>
-                    <input type="text" id="search-input" placeholder="Search for 'skills', 'projects', 'experience', or 'why google'..." class="w-full bg-transparent focus:outline-none text-lg">
+                    <input type="text" id="search-input" placeholder="Search or ✨ ask Gemini anything..." class="w-full bg-transparent focus:outline-none text-lg">
                 </div>
                  <div id="suggestions-box" class="absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-10 hidden">
                     <!-- Suggestions will be populated by JS -->
@@ -75,7 +174,8 @@
 
             <!-- Home/Welcome Section -->
             <section id="home" class="content-section active">
-                 <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                 <div class="bg-white p-8 rounded-2xl shadow-lg relative">
+                     <div class="word-cloud-container" data-words='["Innovation", "Community", "Tech", "Google", "Code", "Build"]'></div>
                     <h2 class="text-2xl font-bold mb-4 text-gray-800">Welcome!</h2>
                     <p class="text-lg text-gray-600">
                         Hello! I'm Revanth, a passionate tech enthusiast and aspiring innovator. This interactive page is a small glimpse into my world.
@@ -86,7 +186,8 @@
 
             <!-- Skills Section -->
             <section id="skills" class="content-section">
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="word-cloud-container" data-words='["Python", "JavaScript", "React", "NodeJS", "SQL", "AWS", "Docker", "Trivy", "LangChain", "RAG", "API"]'></div>
                     <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Technical Skills</h2>
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
                         <div class="bg-blue-50 p-4 rounded-lg"><i class="fab fa-python mr-2 text-blue-500"></i>Python</div>
@@ -94,61 +195,40 @@
                         <div class="bg-red-50 p-4 rounded-lg"><i class="fab fa-html5 mr-2 text-red-500"></i>HTML</div>
                         <div class="bg-indigo-50 p-4 rounded-lg"><i class="fab fa-css3-alt mr-2 text-indigo-500"></i>CSS</div>
                         <div class="bg-green-50 p-4 rounded-lg"><i class="fas fa-database mr-2 text-green-500"></i>SQL</div>
-                        <div class="bg-teal-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>C++</div>
-                        <div class="bg-gray-100 p-4 rounded-lg"><i class="fas fa-cloud mr-2 text-gray-500"></i>
-Web application penetration testing</div>
-                        <div class="bg-blue-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-Retrieval-Augmented Generation (RAG)</div>
-                         <div class="bg-yellow-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>n8n</div>
-                         <div class="bg-red-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-LangChain</div>
-                            <div class="bg-indigo-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-
-Kali Linux</div>
-<div class="bg-green-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-
-ReactJS</div>
-<div class="bg-teal-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-
-NodeJS</div>
- <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-MATLAB</div>
- <div class="bg-blue-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
-Postman and Rest APIs</div>
-
+                        <div class="bg-teal-50 p-4 rounded-lg"><i class="fab fa-cuttlefish mr-2 text-teal-500"></i>C++</div>
+                        <div class="bg-sky-50 p-4 rounded-lg"><i class="fab fa-react mr-2 text-sky-500"></i>ReactJS</div>
+                        <div class="bg-lime-50 p-4 rounded-lg"><i class="fab fa-node-js mr-2 text-lime-500"></i>NodeJS</div>
+                        <div class="bg-orange-50 p-4 rounded-lg"><i class="fas fa-link mr-2 text-orange-500"></i>LangChain</div>
+                        <div class="bg-purple-50 p-4 rounded-lg"><i class="fas fa-brain mr-2 text-purple-500"></i>RAG</div>
+                        <div class="bg-gray-100 p-4 rounded-lg"><i class="fas fa-terminal mr-2 text-gray-500"></i>Kali Linux</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><i class="fas fa-shield-halved mr-2 text-red-500"></i>Penetration Testing</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><i class="fas fa-rocket mr-2 text-blue-500"></i>Postman & REST APIs</div>
+                        <div class="bg-yellow-50 p-4 rounded-lg"><i class="fas fa-wave-square mr-2 text-yellow-500"></i>MATLAB</div>
+                        <div class="bg-green-50 p-4 rounded-lg"><i class="fas fa-sitemap mr-2 text-green-500"></i>n8n</div>
                     </div>
                 </div>
             </section>
 
             <!-- Projects Section -->
             <section id="projects" class="content-section">
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="word-cloud-container" data-words='["CI/CD", "Security", "Automation", "AI", "Chatbot", "API", "Cloud", "Portfolio", "Data"]'></div>
                     <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">My Projects</h2>
                     <div class="space-y-6">
-                        <!-- Project 1 -->
-                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
-                            <h3 class="text-xl font-bold text-blue-600">Trivy CI/CD Vulnerability Scanning Pipeline on AWS</h3>
-                            <p class="text-gray-600 mt-2">Built a secure CI/CD pipeline using Trivy, AWS CodePipeline, and CodeBuild to automate Docker
-image vulnerability scanning.
- Parsed scan results and pushed findings to AWS Security Hub via Python and CloudWatch
-integration.
- Ensured automated container security checks before deployment with ECR and GitHub integration..</p>
+                        <div class="project-card p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="project-title text-xl font-bold text-blue-600">Trivy CI/CD Vulnerability Scanning Pipeline on AWS</h3>
+                            <p class="project-desc text-gray-600 mt-2">Built a secure CI/CD pipeline using Trivy, AWS CodePipeline, and CodeBuild to automate Docker image vulnerability scanning. Parsed scan results and pushed findings to AWS Security Hub via Python and CloudWatch integration. Ensured automated container security checks before deployment with ECR and GitHub integration.</p>
+                            <button class="gemini-btn mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
-                        <!-- Project 2 -->
-                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
-                            <h3 class="text-xl font-bold text-green-600">Stock Portfolio Management System</h3>
-                            <p class="text-gray-600 mt-2">Built a web-based system for users to track and manage their stock holdings.
- Integrated FinnHub API to fetch and display historical stock price data.
- Implemented SQL queries for risk analysis, including average stock returns and volatility.
- Designed an intuitive dashboard to visualize stock performance trends.</p>
+                        <div class="project-card p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="project-title text-xl font-bold text-green-600">Stock Portfolio Management System</h3>
+                            <p class="project-desc text-gray-600 mt-2">Built a web-based system for users to track and manage their stock holdings. Integrated FinnHub API to fetch and display historical stock price data. Implemented SQL queries for risk analysis, including average stock returns and volatility. Designed an intuitive dashboard to visualize stock performance trends.</p>
+                             <button class="gemini-btn mt-4 text-sm font-semibold text-green-600 hover:text-green-800 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
-                         <!-- Project 3 -->
-                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
-                            <h3 class="text-xl font-bold text-purple-600">Conversational AI & RAG Workflow Suite</h3>
-                            <p class="text-gray-600 mt-2">Developed intelligent automation pipelines using n8n, LangChain, and OpenAI GPT-4o.
- Integrated Telegram bot for personalized chat, voice, and image interaction.
- Built RAG chatbot with Pinecone for domain-specific semantic search.
- Automated Google Drive → Pinecone document indexing and Google Sheets lead capture.</p>
+                        <div class="project-card p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="project-title text-xl font-bold text-purple-600">Conversational AI & RAG Workflow Suite</h3>
+                            <p class="project-desc text-gray-600 mt-2">Developed intelligent automation pipelines using n8n, LangChain, and OpenAI GPT-4o. Integrated Telegram bot for personalized chat, voice, and image interaction. Built RAG chatbot with Pinecone for domain-specific semantic search. Automated Google Drive → Pinecone document indexing and Google Sheets lead capture.</p>
+                             <button class="gemini-btn mt-4 text-sm font-semibold text-purple-600 hover:text-purple-800 transition-colors">✨ Ask Gemini About This Project</button>
                         </div>
                     </div>
                 </div>
@@ -156,14 +236,14 @@ integration.
 
             <!-- Experience Section -->
             <section id="experience" class="content-section">
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="word-cloud-container" data-words='["Leadership", "Mentorship", "Community", "Workshops", "Events", "Strategy", "Teamwork"]'></div>
                      <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Experience & Leadership</h2>
                      <div class="space-y-6">
                         <div class="flex items-start">
                             <div class="flex-shrink-0"><i class="fas fa-briefcase text-2xl text-blue-500 mt-1"></i></div>
                             <div class="ml-4">
-                                <h3 class="text-xl font-bold">Core Team Member, ONYX E-CELL</h3>
-                                <h3 class="text-xl font-bold">Core Team Member, ISSA (Technical Club)</h3>
+                                <h3 class="text-xl font-bold">Core Team Member, ONYX E-CELL & ISSA (Technical Club)</h3>
                                 <p class="text-gray-500">National Institute of Engineering</p>
                                 <p class="text-gray-600 mt-2">Organized and led technical workshops on topics like Cloud computing. Mentored junior members and fostered a collaborative learning environment, significantly growing our campus tech community.</p>
                             </div>
@@ -182,20 +262,24 @@ integration.
 
             <!-- Why Google Section -->
             <section id="why-google" class="content-section">
-                 <div class="bg-white p-8 rounded-2xl shadow-lg">
+                 <div class="bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="word-cloud-container" data-words='["Empower", "Connect", "Innovate", "Accessibility", "Gemini", "Community", "Information"]'></div>
                     <h2 class="text-3xl font-bold mb-4 text-center text-gray-800">Why Google?</h2>
                     <div class="text-lg text-gray-700 space-y-4">
                         <p>For me, Google isn't just a company; it's a catalyst for change. The mission to organize the world's information and make it universally accessible and useful resonates deeply with my own desire to build technology that empowers and connects people.</p>
-                        <p>As a Google Student Ambassador, I want to bring that spirit to my campus. I want to demystify technology for my peers, create an inclusive community where everyone feels welcome to learn and innovate, and be a conduit for the incredible resources Google offers. It's about building bridges—between students and technology, and between my campus and Google.
-                            </p><p>When the Gemini student program was introduced I was on the forefront of sharing it with my Peers So that they could access the Gemini Pro Version Free for a year (ngl, its a very good initiative)
-                        </p>
+                        <p>As a Google Student Ambassador, I want to bring that spirit to my campus. I want to demystify technology for my peers, create an inclusive community where everyone feels welcome to learn and innovate, and be a conduit for the incredible resources Google offers. It's about building bridges—between students and technology, and between my campus and Google.</p>
+                        <p>When the Gemini student program was introduced I was on the forefront of sharing it with my Peers So that they could access the Gemini Pro Version Free for a year (ngl, its a very good initiative).</p>
+                    </div>
+                    <div class="text-center mt-8">
+                        <button id="pitch-btn" class="font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-200 text-gray-700">✨ Let Gemini Write My Pitch</button>
                     </div>
                 </div>
             </section>
 
              <!-- I'm Feeling Innovative Section -->
             <section id="innovative" class="content-section">
-                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center relative">
+                    <div class="word-cloud-container" data-words='["Astrophotography", "Galaxies", "Cosmos", "Wonder", "Curiosity", "Technology", "Art"]'></div>
                     <h2 class="text-2xl font-bold mb-4 text-yellow-500">A Fun Fact!</h2>
                     <p class="text-lg text-gray-600">
                         When I'm not coding, I'm exploring the world of astrophotography! There's something magical about capturing the light of distant galaxies. It's a perfect blend of technology and wonder, much like the work done at Google.
@@ -208,91 +292,92 @@ integration.
             </section>
 
         </div>
-
     </div>
+
+    <!-- Gemini Modal -->
+    <div id="gemini-modal-overlay" class="gemini-modal-overlay">
+        <div id="gemini-modal" class="gemini-modal">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="gemini-modal-title" class="text-2xl font-bold text-gray-800">✨ Gemini Insights</h2>
+                <button id="close-gemini-modal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="gemini-modal-content">
+                <!-- Loader or content will be shown here -->
+            </div>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Element Selectors ---
             const searchInput = document.getElementById('search-input');
             const suggestionsBox = document.getElementById('suggestions-box');
             const contentContainer = document.getElementById('content-container');
             const allSections = contentContainer.querySelectorAll('.content-section');
             const searchContainer = document.getElementById('search-container');
             const luckyBtn = document.getElementById('lucky-btn');
+            const geminiModalOverlay = document.getElementById('gemini-modal-overlay');
+            const geminiModalTitle = document.getElementById('gemini-modal-title');
+            const geminiModalContent = document.getElementById('gemini-modal-content');
+            const closeGeminiModalBtn = document.getElementById('close-gemini-modal');
+            const geminiProjectBtns = document.querySelectorAll('.gemini-btn');
+            const pitchBtn = document.getElementById('pitch-btn');
 
+            // --- Data ---
             const searchTerms = ['home', 'skills', 'projects', 'experience', 'why google'];
             const termMap = {
-                'skill': 'skills',
-                'project': 'projects',
-                'work': 'experience',
-                'lead': 'experience',
-                'why': 'why-google',
-                'google': 'why-google'
+                'skill': 'skills', 'project': 'projects', 'work': 'experience',
+                'lead': 'experience', 'why': 'why-google', 'google': 'why-google'
             };
 
-            // Function to show a specific section
+            // --- Core Functions ---
+            function createWordCloud(container) {
+                container.innerHTML = '';
+                const words = JSON.parse(container.getAttribute('data-words'));
+                words.forEach(word => {
+                    const tag = document.createElement('span');
+                    tag.className = 'word-cloud-tag';
+                    tag.textContent = word;
+                    const x = Math.random() * 80 + 10;
+                    const y = Math.random() * 80 + 10;
+                    const delay = Math.random() * 5;
+                    const duration = Math.random() * 10 + 15;
+                    tag.style.left = `${x}%`;
+                    tag.style.top = `${y}%`;
+                    tag.style.animationDelay = `${delay}s`;
+                    tag.style.animationDuration = `${duration}s, 1s`;
+                    container.appendChild(tag);
+                });
+            }
+
             function showSection(id) {
-                // Animate search bar to the top
                 searchContainer.classList.remove('justify-center');
                 searchContainer.classList.add('pt-8');
                 document.getElementById('profile-pic').classList.add('w-20', 'h-20');
                 document.getElementById('main-title').classList.add('text-3xl');
                 document.getElementById('main-subtitle').classList.add('text-base', 'mb-4');
 
-
                 allSections.forEach(section => {
+                    const cloudContainer = section.querySelector('.word-cloud-container');
                     if (section.id === id) {
                         section.classList.add('active');
+                        if (cloudContainer) setTimeout(() => createWordCloud(cloudContainer), 200);
                     } else {
                         section.classList.remove('active');
+                        if (cloudContainer) cloudContainer.innerHTML = '';
                     }
                 });
             }
-
-            // Populate and show suggestions
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.toLowerCase();
-                suggestionsBox.innerHTML = '';
-                if (query.length > 0) {
-                    const filteredTerms = searchTerms.filter(term => term.startsWith(query));
-                    if (filteredTerms.length > 0) {
-                        filteredTerms.forEach(term => {
-                            const div = document.createElement('div');
-                            div.textContent = `Show ${term}`;
-                            div.className = 'p-3 search-suggestion';
-                            div.onclick = () => {
-                                searchInput.value = term;
-                                suggestionsBox.classList.add('hidden');
-                                handleSearch();
-                            };
-                            suggestionsBox.appendChild(div);
-                        });
-                        suggestionsBox.classList.remove('hidden');
-                    } else {
-                        suggestionsBox.classList.add('hidden');
-                    }
-                } else {
-                    suggestionsBox.classList.add('hidden');
-                }
-            });
-
-            // Handle search on Enter
-            searchInput.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
-                    handleSearch();
-                }
-            });
 
             function handleSearch() {
                 const query = searchInput.value.toLowerCase().trim();
                 suggestionsBox.classList.add('hidden');
                 let targetId = '';
 
-                // Direct match
                 if (searchTerms.includes(query)) {
                     targetId = query.replace(' ', '-');
                 } else {
-                    // Check partial matches from termMap
                     for (const key in termMap) {
                         if (query.includes(key)) {
                             targetId = termMap[key];
@@ -303,30 +388,147 @@ integration.
                 
                 if (targetId) {
                     showSection(targetId);
+                } else if (query) {
+                    handleGeminiSearch(query);
                 } else {
-                    // Default to home if no match
                     showSection('home');
                 }
             }
             
-            // "I'm Feeling Innovative" button
-            luckyBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                showSection('innovative');
-            });
+            // --- Gemini API ---
+            const API_KEY = ""; // Handled by environment
 
-            // Hide suggestions when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-                    suggestionsBox.classList.add('hidden');
+            async function callGemini(prompt, useJson = false) {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }]
+                };
+                if (useJson) {
+                    payload.generationConfig = { responseMimeType: "application/json" };
                 }
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        return useJson ? JSON.parse(text) : text;
+                    } else {
+                        throw new Error("No content received from Gemini.");
+                    }
+                } catch (error) {
+                    console.error("Gemini API call failed:", error);
+                    return { error: "Sorry, I couldn't fetch insights from Gemini right now. Please try again later." };
+                }
+            }
+
+            // --- Modal Management ---
+            function openModal(title) {
+                geminiModalTitle.textContent = title;
+                geminiModalOverlay.classList.add('visible');
+                geminiModalContent.innerHTML = '<div class="loader"></div>';
+            }
+
+            function closeModal() {
+                geminiModalOverlay.classList.remove('visible');
+            }
+
+            // --- Feature 1: Project Insights ---
+            geminiProjectBtns.forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    openModal('✨ Gemini Insights');
+                    const card = btn.closest('.project-card');
+                    const title = card.querySelector('.project-title').textContent;
+                    const desc = card.querySelector('.project-desc').textContent;
+                    
+                    const prompt = `Analyze the following project and provide a JSON response with three keys: "explanation", "futureIdeas", and "socialPost".
+                        - "explanation": Briefly explain the project in simple, easy-to-understand terms.
+                        - "futureIdeas": Suggest 3 creative and specific future improvements or new features for this project.
+                        - "socialPost": Write a short, engaging LinkedIn post to announce this project. Include relevant hashtags.
+                        Project Title: ${title}
+                        Project Description: ${desc}`;
+                    
+                    const data = await callGemini(prompt, true);
+                    displayProjectInsights(data);
+                });
             });
 
-            // Initial state: show home
-            showSection('home');
-            // Reset to center on load
-            searchContainer.classList.add('justify-center');
-            searchContainer.classList.remove('pt-8');
+            function displayProjectInsights(data) {
+                if (data.error) {
+                    geminiModalContent.innerHTML = `<p class="text-red-500 text-center">${data.error}</p>`;
+                    return;
+                }
+                geminiModalContent.innerHTML = `
+                    <div class="border-b border-gray-200 mb-4">
+                        <nav class="flex -mb-px" id="gemini-tabs">
+                            <button data-target="explanation" class="gemini-tab active">Explanation</button>
+                            <button data-target="futureIdeas" class="gemini-tab">Future Ideas</button>
+                            <button data-target="socialPost" class="gemini-tab">Social Post</button>
+                        </nav>
+                    </div>
+                    <div>
+                        <div id="explanation" class="gemini-content active space-y-2"><p>${data.explanation.replace(/\n/g, '<br>')}</p></div>
+                        <div id="futureIdeas" class="gemini-content space-y-2"><p>${data.futureIdeas.replace(/\n/g, '<br>')}</p></div>
+                        <div id="socialPost" class="gemini-content space-y-2"><p class="whitespace-pre-wrap">${data.socialPost}</p></div>
+                    </div>`;
+                
+                const tabs = geminiModalContent.querySelectorAll('.gemini-tab');
+                const contents = geminiModalContent.querySelectorAll('.gemini-content');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        const targetId = tab.getAttribute('data-target');
+                        contents.forEach(content => content.classList.toggle('active', content.id === targetId));
+                    });
+                });
+            }
+
+            // --- Feature 2: AI Search ---
+            async function handleGeminiSearch(query) {
+                openModal('✨ Gemini Brainstorm');
+                const prompt = `In the context of Revanth Malagi, a tech student skilled in AI, Cloud, and security, provide a concise and helpful response to the following query: "${query}"`;
+                const result = await callGemini(prompt);
+                geminiModalContent.innerHTML = `<p>${result.error ? result.error : result.replace(/\n/g, '<br>')}</p>`;
+            }
+
+            // --- Feature 3: Pitch Generator ---
+            pitchBtn.addEventListener('click', () => {
+                openModal('✨ Personalized Pitch');
+                geminiModalContent.innerHTML = `
+                    <p class="mb-2 text-gray-600">Who is this pitch for?</p>
+                    <input type="text" id="pitch-role-input" class="w-full p-2 border rounded-md mb-4" placeholder="e.g., Recruiter, Student Peer, Event Organizer">
+                    <button id="generate-pitch-btn" class="w-full font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 bg-blue-500 text-white">Generate Pitch</button>
+                `;
+                document.getElementById('generate-pitch-btn').addEventListener('click', async () => {
+                    const role = document.getElementById('pitch-role-input').value.trim();
+                    if (!role) {
+                        alert("Please enter a role.");
+                        return;
+                    }
+                    geminiModalContent.innerHTML = '<div class="loader"></div>';
+                    const prompt = `You are a career coach crafting a pitch for Revanth Malagi for the Google Student Ambassador role. His key strengths are community building, technical workshops (AI, Cloud), and leadership. Tailor a short, compelling pitch for an audience of a "${role}".`;
+                    const result = await callGemini(prompt);
+                    geminiModalContent.innerHTML = `<p class="whitespace-pre-wrap">${result.error ? result.error : result}</p>`;
+                });
+            });
+
+            // --- Event Listeners ---
+            searchInput.addEventListener('keyup', e => e.key === 'Enter' && handleSearch());
+            luckyBtn.addEventListener('click', () => { searchInput.value = ''; showSection('innovative'); });
+            closeGeminiModalBtn.addEventListener('click', closeModal);
+            geminiModalOverlay.addEventListener('click', e => e.target === geminiModalOverlay && closeModal());
+            
+            // Initial setup
+            const initialSection = document.getElementById('home');
+            initialSection.classList.add('active');
+            const initialCloudContainer = initialSection.querySelector('.word-cloud-container');
+            if(initialCloudContainer) createWordCloud(initialCloudContainer);
         });
     </script>
 
