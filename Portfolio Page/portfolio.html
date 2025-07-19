@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revanth Malagi - Google Student Ambassador Applicant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .search-bar-container {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .content-section {
+            transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+            transform: translateY(20px);
+            opacity: 0;
+            display: none; /* Hidden by default */
+        }
+        .content-section.active {
+            transform: translateY(0);
+            opacity: 1;
+            display: block;
+        }
+        .search-suggestion {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .search-suggestion:hover {
+            background-color: #e9e9e9;
+        }
+        .lucky-btn {
+             background: linear-gradient(90deg, #4285F4, #DB4437, #F4B400, #0F9D58);
+             background-size: 200% 200%;
+             animation: gradient-animation 5s ease infinite;
+             color: white;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-16 min-h-screen flex flex-col items-center justify-center">
+
+        <!-- Profile and Search Bar Container -->
+        <div id="search-container" class="w-full max-w-2xl text-center search-bar-container">
+            <img id="profile-pic" src="Screenshot 2025-07-19 213522.png" alt="Revanth Malagi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg transition-all duration-500">
+            <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-gray-800 transition-all duration-500">Revanth Malagi</h1>
+            <p id="main-subtitle" class="text-lg text-gray-600 mt-2 mb-8 transition-all duration-500">Google Student Ambassador Applicant</p>
+
+            <div class="relative w-full">
+                <div class="flex items-center bg-white rounded-full shadow-md p-2">
+                    <i class="fas fa-search text-gray-400 mx-3"></i>
+                    <input type="text" id="search-input" placeholder="Search for 'skills', 'projects', 'experience', or 'why google'..." class="w-full bg-transparent focus:outline-none text-lg">
+                </div>
+                 <div id="suggestions-box" class="absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden z-10 hidden">
+                    <!-- Suggestions will be populated by JS -->
+                </div>
+            </div>
+            <div class="mt-6">
+                 <button id="lucky-btn" class="lucky-btn font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300">I'm Feeling Innovative</button>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div id="content-container" class="w-full max-w-4xl mt-12">
+
+            <!-- Home/Welcome Section -->
+            <section id="home" class="content-section active">
+                 <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Welcome!</h2>
+                    <p class="text-lg text-gray-600">
+                        Hello! I'm Revanth, a passionate tech enthusiast and aspiring innovator. This interactive page is a small glimpse into my world.
+                        Type a keyword in the search bar above to learn more about me, or hit the "I'm Feeling Innovative" button for a surprise!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="content-section">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Technical Skills</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-blue-50 p-4 rounded-lg"><i class="fab fa-python mr-2 text-blue-500"></i>Python</div>
+                        <div class="bg-yellow-50 p-4 rounded-lg"><i class="fab fa-js-square mr-2 text-yellow-500"></i>JavaScript</div>
+                        <div class="bg-red-50 p-4 rounded-lg"><i class="fab fa-html5 mr-2 text-red-500"></i>HTML</div>
+                        <div class="bg-indigo-50 p-4 rounded-lg"><i class="fab fa-css3-alt mr-2 text-indigo-500"></i>CSS</div>
+                        <div class="bg-green-50 p-4 rounded-lg"><i class="fas fa-database mr-2 text-green-500"></i>SQL</div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>C++</div>
+                        <div class="bg-gray-100 p-4 rounded-lg"><i class="fas fa-cloud mr-2 text-gray-500"></i>
+Web application penetration testing</div>
+                        <div class="bg-blue-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+Retrieval-Augmented Generation (RAG)</div>
+                         <div class="bg-yellow-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>n8n</div>
+                         <div class="bg-red-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+LangChain</div>
+                            <div class="bg-indigo-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+
+Kali Linux</div>
+<div class="bg-green-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+
+ReactJS</div>
+<div class="bg-teal-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+
+NodeJS</div>
+ <div class="bg-gray-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+MATLAB</div>
+ <div class="bg-blue-50 p-4 rounded-lg"><i class="fas fa-robot mr-2 text-teal-500"></i>
+Postman and Rest APIs</div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">My Projects</h2>
+                    <div class="space-y-6">
+                        <!-- Project 1 -->
+                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-bold text-blue-600">Trivy CI/CD Vulnerability Scanning Pipeline on AWS</h3>
+                            <p class="text-gray-600 mt-2">Built a secure CI/CD pipeline using Trivy, AWS CodePipeline, and CodeBuild to automate Docker
+image vulnerability scanning.
+ Parsed scan results and pushed findings to AWS Security Hub via Python and CloudWatch
+integration.
+ Ensured automated container security checks before deployment with ECR and GitHub integration..</p>
+                        </div>
+                        <!-- Project 2 -->
+                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-bold text-green-600">Stock Portfolio Management System</h3>
+                            <p class="text-gray-600 mt-2">Built a web-based system for users to track and manage their stock holdings.
+ Integrated FinnHub API to fetch and display historical stock price data.
+ Implemented SQL queries for risk analysis, including average stock returns and volatility.
+ Designed an intuitive dashboard to visualize stock performance trends.</p>
+                        </div>
+                         <!-- Project 3 -->
+                        <div class="p-6 border rounded-lg hover:shadow-md transition-shadow">
+                            <h3 class="text-xl font-bold text-purple-600">Conversational AI & RAG Workflow Suite</h3>
+                            <p class="text-gray-600 mt-2">Developed intelligent automation pipelines using n8n, LangChain, and OpenAI GPT-4o.
+ Integrated Telegram bot for personalized chat, voice, and image interaction.
+ Built RAG chatbot with Pinecone for domain-specific semantic search.
+ Automated Google Drive → Pinecone document indexing and Google Sheets lead capture.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="content-section">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                     <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Experience & Leadership</h2>
+                     <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0"><i class="fas fa-briefcase text-2xl text-blue-500 mt-1"></i></div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-bold">Core Team Member, ONYX E-CELL</h3>
+                                <h3 class="text-xl font-bold">Core Team Member, ISSA (Technical Club)</h3>
+                                <p class="text-gray-500">National Institute of Engineering</p>
+                                <p class="text-gray-600 mt-2">Organized and led technical workshops on topics like Cloud computing. Mentored junior members and fostered a collaborative learning environment, significantly growing our campus tech community.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0"><i class="fas fa-users text-2xl text-green-500 mt-1"></i></div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-bold">Campus Ambassador and Student Director</h3>
+                                <p class="text-gray-500">Unstop (D2C Company)</p>
+                                <p class="text-gray-600 mt-2">Represented Unstop on campus, organized coding competitions, and acted as a bridge between the student community and the company, enhancing my communication and leadership skills.</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Why Google Section -->
+            <section id="why-google" class="content-section">
+                 <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-4 text-center text-gray-800">Why Google?</h2>
+                    <div class="text-lg text-gray-700 space-y-4">
+                        <p>For me, Google isn't just a company; it's a catalyst for change. The mission to organize the world's information and make it universally accessible and useful resonates deeply with my own desire to build technology that empowers and connects people.</p>
+                        <p>As a Google Student Ambassador, I want to bring that spirit to my campus. I want to demystify technology for my peers, create an inclusive community where everyone feels welcome to learn and innovate, and be a conduit for the incredible resources Google offers. It's about building bridges—between students and technology, and between my campus and Google.
+                            </p><p>When the Gemini student program was introduced I was on the forefront of sharing it with my Peers So that they could access the Gemini Pro Version Free for a year (ngl, its a very good initiative)
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- I'm Feeling Innovative Section -->
+            <section id="innovative" class="content-section">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <h2 class="text-2xl font-bold mb-4 text-yellow-500">A Fun Fact!</h2>
+                    <p class="text-lg text-gray-600">
+                        When I'm not coding, I'm exploring the world of astrophotography! There's something magical about capturing the light of distant galaxies. It's a perfect blend of technology and wonder, much like the work done at Google.
+                    </p>
+                     <div class="mt-6 flex justify-center space-x-6">
+                        <a href="https://www.linkedin.com/in/revanth-malagi/" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors"><i class="fab fa-linkedin text-3xl"></i></a>
+                        <a href="https://github.com/08revanth" target="_blank" class="text-gray-800 hover:text-black transition-colors"><i class="fab fa-github text-3xl"></i></a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const suggestionsBox = document.getElementById('suggestions-box');
+            const contentContainer = document.getElementById('content-container');
+            const allSections = contentContainer.querySelectorAll('.content-section');
+            const searchContainer = document.getElementById('search-container');
+            const luckyBtn = document.getElementById('lucky-btn');
+
+            const searchTerms = ['home', 'skills', 'projects', 'experience', 'why google'];
+            const termMap = {
+                'skill': 'skills',
+                'project': 'projects',
+                'work': 'experience',
+                'lead': 'experience',
+                'why': 'why-google',
+                'google': 'why-google'
+            };
+
+            // Function to show a specific section
+            function showSection(id) {
+                // Animate search bar to the top
+                searchContainer.classList.remove('justify-center');
+                searchContainer.classList.add('pt-8');
+                document.getElementById('profile-pic').classList.add('w-20', 'h-20');
+                document.getElementById('main-title').classList.add('text-3xl');
+                document.getElementById('main-subtitle').classList.add('text-base', 'mb-4');
+
+
+                allSections.forEach(section => {
+                    if (section.id === id) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            // Populate and show suggestions
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                suggestionsBox.innerHTML = '';
+                if (query.length > 0) {
+                    const filteredTerms = searchTerms.filter(term => term.startsWith(query));
+                    if (filteredTerms.length > 0) {
+                        filteredTerms.forEach(term => {
+                            const div = document.createElement('div');
+                            div.textContent = `Show ${term}`;
+                            div.className = 'p-3 search-suggestion';
+                            div.onclick = () => {
+                                searchInput.value = term;
+                                suggestionsBox.classList.add('hidden');
+                                handleSearch();
+                            };
+                            suggestionsBox.appendChild(div);
+                        });
+                        suggestionsBox.classList.remove('hidden');
+                    } else {
+                        suggestionsBox.classList.add('hidden');
+                    }
+                } else {
+                    suggestionsBox.classList.add('hidden');
+                }
+            });
+
+            // Handle search on Enter
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+
+            function handleSearch() {
+                const query = searchInput.value.toLowerCase().trim();
+                suggestionsBox.classList.add('hidden');
+                let targetId = '';
+
+                // Direct match
+                if (searchTerms.includes(query)) {
+                    targetId = query.replace(' ', '-');
+                } else {
+                    // Check partial matches from termMap
+                    for (const key in termMap) {
+                        if (query.includes(key)) {
+                            targetId = termMap[key];
+                            break;
+                        }
+                    }
+                }
+                
+                if (targetId) {
+                    showSection(targetId);
+                } else {
+                    // Default to home if no match
+                    showSection('home');
+                }
+            }
+            
+            // "I'm Feeling Innovative" button
+            luckyBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                showSection('innovative');
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.classList.add('hidden');
+                }
+            });
+
+            // Initial state: show home
+            showSection('home');
+            // Reset to center on load
+            searchContainer.classList.add('justify-center');
+            searchContainer.classList.remove('pt-8');
+        });
+    </script>
+
+</body>
+</html>
